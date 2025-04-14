@@ -103,9 +103,9 @@ export const HomePage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {showForm && (
+      {/*{showForm && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg w-1/3">
+          <div className="bg-white p-4 sm:p-6 rounded-lg w-full max-w-md">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold">Add New Book</h2>
               <X className="cursor-pointer" onClick={() => setShowForm(false)} />
@@ -133,7 +133,81 @@ export const HomePage = () => {
             </form>
           </div>
         </div>
-      )}
+      )}*/}
+
+        {showForm && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 px-4">
+            <div className="bg-white p-4 sm:p-6 rounded-lg w-full max-w-md">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-lg sm:text-xl font-bold">Add New Book</h2>
+                <X className="cursor-pointer" onClick={() => setShowForm(false)} />
+              </div>
+              <form onSubmit={handleSubmit} className="space-y-3">
+                <input
+                  type="text"
+                  name="title"
+                  placeholder="Title"
+                  className="w-full border p-2"
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="author"
+                  placeholder="Author"
+                  className="w-full border p-2"
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="imageUrl"
+                  placeholder="Image URL"
+                  className="w-full border p-2"
+                  onChange={handleInputChange}
+                />
+                <input
+                  type="text"
+                  name="location"
+                  placeholder="Location"
+                  className="w-full border p-2"
+                  onChange={handleInputChange}
+                />
+                <select
+                  name="category"
+                  className="w-full border p-2"
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Category</option>
+                  <option value="fiction">Fiction</option>
+                  <option value="love">Love</option>
+                  <option value="self-dev">Self Development</option>
+                  <option value="biopic">Biography</option>
+                  <option value="inspiring">Inspiring</option>
+                  <option value="story">Story</option>
+                </select>
+                <select
+                  name="status"
+                  className="w-full border p-2"
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Status</option>
+                  <option value="available">Available</option>
+                  <option value="unavailable">Unavailable</option>
+                </select>
+                <button
+                  type="submit"
+                  className="w-full bg-blue-600 text-white p-2 rounded"
+                >
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
+
 
       <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
         <div className="flex max-w-xl">
