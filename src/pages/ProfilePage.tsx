@@ -29,6 +29,7 @@ export const ProfilePage = () => {
   const [myBooks, setMyBooks] = useState<Book[]>([]);
   const [books,setBooks]=useState<Book[]>([]);
   const [showForm, setShowForm] = useState(false);
+  const [editForm, setEditForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [newBook, setNewBook] = useState({
       "id":"",
@@ -70,8 +71,8 @@ export const ProfilePage = () => {
       console.log("isEdit:",isEditing);
       console.log("newBook",newBook.id);
       const url = isEditing
-        ? `${process.env.REACT_APP_API_URL}/api/books/${newBook.id}`
-        : '${process.env.REACT_APP_API_URL}/api/books';
+        ? `${import.meta.env.VITE_API_URL}/api/books/${newBook.id}`
+        : `${import.meta.env.VITE_API_URL}/api/books`;
     
       const method = isEditing ? 'PUT' : 'POST';
       const bookData = {
@@ -106,6 +107,7 @@ export const ProfilePage = () => {
           setMyBooks(books => [...books, {...addedBook, id:addedBook._id}]);
         }
         setShowForm(false);
+        setEditForm(false);
         setNewBook({"id":"","title": "", "author": "", "category": "","createdBy":"","status":"available", "condition": "", "imageUrl": "", "location":""});
       }
     };
@@ -127,7 +129,7 @@ export const ProfilePage = () => {
       location: book.location || '',
       createdBy: book.createdBy || ''
     });
-    setShowForm(true);
+    setEditForm(true);
   };
 
 
@@ -230,6 +232,84 @@ export const ProfilePage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+
+        {editForm && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+            <div className="bg-white p-6 rounded-lg w-full max-w-md">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-lg sm:text-xl font-bold">Edit Book</h2>
+                <X className="cursor-pointer" onClick={() => setEditForm(false)} />
+              </div>
+              <form onSubmit={handleSubmit} className="space-y-3">
+                <input
+                  type="text"
+                  name="title"
+                  placeholder="Title"
+                  className="w-full border p-2"
+                  value={newBook.title}  // Binding to newBook
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="author"
+                  placeholder="Author"
+                  className="w-full border p-2"
+                  value={newBook.author}  // Binding to newBook
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="imageUrl"
+                  placeholder="Image URL"
+                  className="w-full border p-2"
+                  value={newBook.imageUrl}  // Binding to newBook
+                  onChange={handleInputChange}
+                />
+                <input
+                  type="text"
+                  name="location"
+                  placeholder="Location"
+                  className="w-full border p-2"
+                  value={newBook.location}  // Binding to newBook
+                  onChange={handleInputChange}
+                />
+                <select
+                  name="category"
+                  className="w-full border p-2"
+                  value={newBook.category}  // Binding to newBook
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Category</option>
+                  <option value="fiction">Fiction</option>
+                  <option value="love">Love</option>
+                  <option value="self-dev">Self Development</option>
+                  <option value="biopic">Biography</option>
+                  <option value="inspiring">Inspiring</option>
+                  <option value="story">Story</option>
+                </select>
+                <select
+                  name="status"
+                  className="w-full border p-2"
+                  value={newBook.status}  // Binding to newBook
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Status</option>
+                  <option value="available">Available</option>
+                  <option value="unavailable">Unavailable</option>
+                </select>
+                <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">Submit</button>
+              </form>
+            </div>
+          </div>
+        )}
+
+
+
+
        {showForm && (
                  <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 px-4">
                    <div className="bg-white p-4 sm:p-6 rounded-lg w-full max-w-md">
@@ -303,7 +383,7 @@ export const ProfilePage = () => {
                  </div>
                )}
 
-        {!showForm && (
+        {!showForm && !editForm && (
           <div className="relative bg-white rounded-lg shadow-md p-6 mb-8">
             {!editMode && (
               <button
