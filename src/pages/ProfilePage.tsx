@@ -304,15 +304,15 @@ export const ProfilePage = () => {
                )}
 
         {!showForm && (
-        <div className="relative bg-white rounded-lg shadow-md p-6 mb-8">
-          {!editMode && (
-            <button
-              onClick={() => setEditMode(true)}
-              className="absolute top-4 right-4 px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center text-sm"
-            >
-              <Edit className="inline mr-1 h-4 w-4" />
-              Edit
-            </button>
+          <div className="relative bg-white rounded-lg shadow-md p-6 mb-8">
+            {!editMode && (
+              <button
+               onClick={() => setEditMode(true)}
+               className="absolute top-4 right-4 px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center text-sm"
+              >
+                <Edit className="inline mr-1 h-4 w-4" />
+               Edit
+             </button>
           )}
 
           <div className="flex items-center space-x-4">
